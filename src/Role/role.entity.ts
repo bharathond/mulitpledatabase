@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { UserEntity } from 'src/user/user.entity';
 
 @Entity('tblrole')
 export class RoleEntity {
@@ -7,4 +8,7 @@ export class RoleEntity {
 
     @Column({ length: 100 })
     roleName: string;
+
+    @OneToMany(() => UserEntity, user => user.roleId)
+    userRoleId: UserEntity;
 }

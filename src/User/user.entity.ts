@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne } from 'typeorm';
+
+import { RoleEntity } from '../role/role.entity';
 
 @Entity('tbluser')
 export class UserEntity {
@@ -40,4 +42,7 @@ export class UserEntity {
 
     @CreateDateColumn()
     userDeletedDate: Date;
+
+    @ManyToOne(type => RoleEntity, role => role.roleId)
+    roleId: RoleEntity;
 }
