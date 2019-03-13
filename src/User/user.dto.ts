@@ -3,6 +3,6 @@ export interface UserDTO {
     userEmail:string;
     userPassword:string;
     userMobile:number;
-    userdob : Date;
-    userGender : string;
+    userDOB : Date;
+    userGender : 'M' | 'F';
 }

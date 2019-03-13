@@ -1,45 +1,44 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-import { UserEntity } from "./user.entity";
+import { UserEntity } from './user.entity';
 import { UserDTO } from "./user.dto";
 
 @Injectable()
 export class UserService {
-    
     constructor(
         @InjectRepository(UserEntity) 
-        private userRepository: Repository<UserEntity>
-    ){}
+        private readonly userRepository: Repository<UserEntity>
+    ) { }
 
-    async getAllUsers(){
+    async getAllUsers() {
         return await this.userRepository.find();
     }
 
-    async getUser(id:number){
+    async getUser(id: number) {
         return await this.userRepository.findOne({
-            select:["userId","userName","userEmail","userMobile"],
-            where: [{"userId":id}]
+            select: ["userId", "userName", "userEmail", "userMobile"],
+            where: [{ "userId": id }]
         });
     }
 
-    async createUser(data:Partial<UserDTO>){
+    async createUser(data: Partial<UserDTO>) {
         const userData = await this.userRepository.create(data);
         await this.userRepository.save(userData);
         return userData;
     }
 
-    async updateUser(id: number,data: Partial<UserDTO>){
-        await this.userRepository.update({userId : id},data);
+    async updateUser(id: number, data: Partial<UserDTO>) {
+        await this.userRepository.update({ userId: id }, data);
         const updatedData = this.userRepository.findOne({
-            where:{userId : id}
+            where: { userId: id }
         });
         return updatedData;
     }
 
-    async deleteUser(id: number){
-        await this.userRepository.delete({userId:id});
-        return {deleted : true};
+    async deleteUser(id: number) {
+        await this.userRepository.delete({ userId: id });
+        return { deleted: true };
     }
 }

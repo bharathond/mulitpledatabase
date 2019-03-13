@@ -1,12 +1,16 @@
 {
+   "name": "default",
    "type": "mysql",
    "host": "localhost",
    "port": "3306",
    "username": "root",
    "password": "",
    "database": "dbcon1",
+   "entities": [
+      "src/**/**.entity{.ts,.js}"
+   ],
    "synchronize": true,
+   "autoSchemaSync": true,
    "dropSchema": false,
-   "logging": true,
-   "entities": ["src/**/*.entity.ts", "dist/**/*.entity.js"]
+   "logging": true
 }
