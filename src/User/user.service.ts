@@ -1,25 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { UserEntity } from './user.entity';
-import { UserDTO } from "./user.dto";
+import { UserDTO } from './user.dto';
 
 @Injectable()
 export class UserService {
     constructor(
-        @InjectRepository(UserEntity) 
-        private readonly userRepository: Repository<UserEntity>
+        @InjectRepository(UserEntity)
+        private readonly userRepository: Repository<UserEntity>,
     ) { }
 
     async getAllUsers() {
-        return await this.userRepository.find();
+        const user = await this.userRepository.find();
+        // Logger.log(user);
+        return user;
     }
 
     async getUser(id: number) {
         return await this.userRepository.findOne({
-            select: ["userId", "userName", "userEmail", "userMobile"],
-            where: [{ "userId": id }]
+            select: ['userId', 'userName', 'userEmail', 'userMobile'],
+            where: [{ userId: id }],
         });
     }
 
@@ -32,7 +34,7 @@ export class UserService {
     async updateUser(id: number, data: Partial<UserDTO>) {
         await this.userRepository.update({ userId: id }, data);
         const updatedData = this.userRepository.findOne({
-            where: { userId: id }
+            where: { userId: id },
         });
         return updatedData;
     }

@@ -7,7 +7,7 @@ export class UserEntity {
     @PrimaryGeneratedColumn()
     userId: number;
 
-    @Column({ length: 75 })
+    @Column({ length: 75, unique: true })
     userName: string;
 
     @Column({ length: 100 })
@@ -25,14 +25,14 @@ export class UserEntity {
     @Column({ type: 'enum', enum: ['M', 'F'] })
     userGender: 'M' | 'F';
 
-    @Column()
-    userCreatedBy: string;
+    @Column('int')
+    userCreatedBy: number;
 
-    @Column()
-    userUpdatedBy: string;
+    @Column('int')
+    userUpdatedBy: number;
 
-    @Column()
-    userDeletedBy: string;
+    @Column('int')
+    userDeletedBy: number;
 
     @CreateDateColumn()
     userCreatedDate: Date;
@@ -44,5 +44,5 @@ export class UserEntity {
     userDeletedDate: Date;
 
     @ManyToOne(type => RoleEntity, role => role.roleId)
-    roleId: RoleEntity;
+    user: RoleEntity;
 }
